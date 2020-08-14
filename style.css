@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+
+#image {
+    max-width: 400px;
+    height: auto;
+}
+
+#clock {
+    font-size: 40px;
+    display: block;
+    padding: 5px 0px;
+}

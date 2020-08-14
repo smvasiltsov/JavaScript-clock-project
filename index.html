@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Motivation for work</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Lolcat clock</h1>
+    <div id="header">
+        <h1>Do what you need to do</h1>
+        <h4 id="goal">Making the unicorn!</h4>
+    </div>
 
-    <span id="clock">Here wil be clock</span>
-
+    <div id="clockContainer">
+        <span id="clock">Here wil be clock</span>
+    </div>
     
-    <section id = imageContainer>
+       
+    <div id = "imageContainer">
         <img id="image" src="" alt="cat clock"> 
-    </section>
+    </div>
+
+    <div id="footer">
+        <input type="text" id="newGoal" placeholder="Do something">
+        <label for="goal">for</label>
+        <input type="text" name="minutesToWork" id="minutesToWork" placeholder="30">
+        <label for="minutesToWork">minutes!</label>
+        <input type="submit" name="submitJTBD" id="submitJTBD" value="Safe" onclick="setGoal()">
+    </div>
     
 
 <script src="app.js"></script>

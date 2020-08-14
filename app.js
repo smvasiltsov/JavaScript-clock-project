@@ -6,7 +6,7 @@ const image = document.getElementById('image')
 const oneSecond = 1000
 const wakeupHour = 3
 const dayTimeHour = 12
-const goToSleepHour = 23
+const goToSleepHour = 21
 
 // Images
 const nightCatSrc = 'http://www.leadervet.com/night.jpg'
@@ -50,13 +50,20 @@ function formatCurrentTime() {
 function changeImage () {
     let fullHours = currentTime.getHours()
 
-    if (fullHours > goToSleepHour || fullHours <= wakeupHour) {
+    if (fullHours >= goToSleepHour || fullHours < wakeupHour) {
         image.src = nightCatSrc
-    } else if (fullHours > wakeupHour && fullHours <= dayTimeHour) {
+    } else if (fullHours >= wakeupHour && fullHours < dayTimeHour) {
         image.src = morningCatSrc
-    } else if (fullHours > dayTimeHour && fullHours <= goToSleepHour) {
+    } else if (fullHours >= dayTimeHour && fullHours < goToSleepHour) {
         image.src = daytimeCatSrc
     }
+}
+
+function setGoal () {
+    const newGoal = document.getElementById("newGoal").value
+    document.getElementById("goal").innerText = newGoal
+    console.log(newGoal)
+
 }
 
 updateClock()

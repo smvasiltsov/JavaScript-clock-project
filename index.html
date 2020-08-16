@@ -8,25 +8,25 @@
 </head>
 <body>
     <div id="header">
-        <h1>Do what you need to do</h1>
-        <h4 id="goal">Making the unicorn!</h4>
+        <h1></h1>
+        <h4 id="goal">Input your goal and time!</h4>
     </div>
 
     <div id="clockContainer">
-        <span id="clock">Here wil be clock</span>
+        <span id="clock"></span>
     </div>
     
        
     <div id = "imageContainer">
-        <img id="image" src="" alt="cat clock"> 
+        <img id="image" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg" alt="cat clock" width="auto" height="100%"> 
     </div>
 
     <div id="footer">
         <input type="text" id="newGoal" placeholder="Do something">
         <label for="goal">for</label>
-        <input type="text" name="minutesToWork" id="minutesToWork" placeholder="30">
+        <input type="number" name="minutesToWork" id="minutesToWork" placeholder="30" value="30" pattern="0-9">
         <label for="minutesToWork">minutes!</label>
-        <input type="submit" name="submitJTBD" id="submitJTBD" value="Safe" onclick="setGoal()">
+        <input type="submit" name="submitGoal" id="submitGoal" value="Safe" onclick="submitGoal()">
     </div>
     
 

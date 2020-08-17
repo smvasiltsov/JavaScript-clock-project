@@ -1,7 +1,7 @@
 // document elements
-const clock = document.getElementById('clock');
-const goal = document.getElementById('goal');
-const image = document.getElementById('image');
+const clockOutput = document.getElementById("clock");
+const goalOutput = document.getElementById("goal");
+const image = document.getElementById("image");
 
 // const variables
 const ONE_SECOND = 1000;
@@ -10,13 +10,14 @@ const END_KEY_CODE = 35;
 const ESC_KEY_CODE = 27;
 const defaultGoalText = "Input your goal and time!";
 const defaultFinishedText = "It's time to take a break";
-const defaultPauseText = " || paused";
+const defaultPauseText = "paused";
+const defaultTitle = "Motivation for work";
 
 // Images
-const canselledCatSrc = "https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg"
-const progressCatSrc = "http://www.leadervet.com/night.jpg"
-const pauseCatSrc = "https://cathumor.net/wp-content/uploads/2015/03/Cat-humor-Good-Morning.jpg"
-const finishedCatSrc = "https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg"
+const canselledCatSrc = "canselled.jpg"
+const progressCatSrc = "progress.jpg"
+const pauseCatSrc = "pause.jpg"
+const finishedCatSrc = "finished.jpg"
 
 let secondsLeft = 0;
 let seconds = minutes = hours = 0;
@@ -30,24 +31,29 @@ class Timer {
         this.seconds = minutes = hours = 0;
     }
 
+    // should run every second
     checkState() {
-        switch(this.currentState) {
+        switch (this.currentState) {
             case "progress":
-                this.run(this.secondsLeft--);
+                this.updateTimer(this.secondsLeft--);
                 image.src = progressCatSrc;
+                document.title = clockOutput.innerText;
                 break;
             case "pause":
-                clock.innerText = defaultPauseText;
+                clockOutput.innerText = defaultPauseText;
                 image.src = pauseCatSrc;
+                document.title = clockOutput.innerText;
                 break;
             case "canselled":
-                clock.innerText = "";
-                goal.innerText = defaultGoalText;
+                clockOutput.innerText = "";
+                goalOutput.innerText = defaultGoalText;
                 image.src = canselledCatSrc;
+                document.title = defaultTitle;
                 break;
             case "finished":
-                clock.innerText = defaultFinishedText;
+                clockOutput.innerText = defaultFinishedText;
                 image.src = finishedCatSrc;
+                document.title = defaultTitle;
                 break;
         }
     }
@@ -60,51 +66,59 @@ class Timer {
         newTime != NaN && newTime > 0 ? this.secondsLeft = newTime : alert("Enter correct time");
     }
 
-    run(seconds) {
+    updateTimer(seconds) {
         // converting seconds to minutes and hours
-        let timerText = "";
-        if(this.secondsLeft <= 0) {
+        let tempTimerText = "";
+        if (this.secondsLeft <= 0) {
             this.setState("finished");
             document.getElementById("tone").play()
             this.checkState();
         }
 
-        if (this.secondsLeft > 59) {
-            minutes = Math.floor(this.secondsLeft / 60);
-            seconds = this.secondsLeft % 60;
-            timerText = `${minutes} : ${seconds}`;
-            if (minutes > 59) {
-                hours = Math.floor(minutes / 60);
-                minutes = minutes % 60;
-                timerText = `${hours} : ${minutes} : ${seconds}`;
-            }
-        } else {
-            seconds = this.secondsLeft;
-            timerText = `${seconds}`;
-        }
-        
-        // formatting
-        if (hours < 10) { hours = '0' + hours };
-        if (minutes < 10) { minutes = '0' + minutes };
-        if (seconds < 10) { seconds = '0' + seconds };
-        
+        time.countTimeFromSeconds(this.secondsLeft);
+        tempTimerText = `${time.seconds}`;
+        if(time.minutesExist()) tempTimerText = `${time.minutes} : ` + tempTimerText;
+        if(time.hoursExists()) tempTimerText = `${time.hours} : ` + tempTimerText;
+
         // showing exact time left
-        clock.innerText = timerText;
+        clockOutput.innerText = tempTimerText;
     }
 }
 
-function submitGoal() {
-    const newGoal = document.getElementById("newGoal").value;
-    const newTime = document.getElementById("minutesToWork").value;
+class Time {
+    constructor() {
+        this.seconds = 0;
+        this.minutes = 0;
+        this.hours = 0;
+    }
+    minutesExist() {
+        return this.minutes > 0 || this.hours > 0
+    }
+    hoursExists() {
+        return this.hours > 0
+    }
+    countTimeFromSeconds(inputSeconds) {
+        const SECONDS_IN_HOUR = 3600;
+        const SECONDS_IN_MINUTE = 60;
+        this.hours = Math.floor(inputSeconds / SECONDS_IN_HOUR);
+        this.minutes = Math.floor((inputSeconds % SECONDS_IN_HOUR) / SECONDS_IN_MINUTE);
+        this.seconds = Math.floor(((inputSeconds % SECONDS_IN_HOUR) % SECONDS_IN_MINUTE));
+        if (this.minutes > 0) this.seconds = ("0" + this.seconds.toString()).slice(-2);
+        if (this.hours > 0) this.minutes = ("0" + this.minutes.toString()).slice(-2);
+    }
+}
 
-    if(newGoal=="" || newTime=="" || newTime==NaN || newTime <= 0) 
-    {
+function submitNewGoal() {
+    const newGoalValue = document.getElementById("newGoal").value;
+    const newTimeValue = document.getElementById("newTime").value;
+
+    if (newGoalValue == "" || newTimeValue == "" || newTimeValue == NaN || newTimeValue <= 0) {
         alert("Enter correct goal and time");
         return;
     }
-    
-    document.getElementById("goal").innerText = newGoal;
-    timer.setTime(newTime * 60);
+
+    goalOutput.innerText = newGoalValue;
+    timer.setTime(newTimeValue * 60);
     timer.setState("progress");
     timer.checkState();
 }
@@ -113,15 +127,15 @@ function enableKeyboardInteractions() {
     this.addEventListener("keyup", function (event) {
         switch (event.keyCode) {
             case ENTER_KEY_CODE:
-                submitGoal();
+                submitNewGoal();
                 break;
             case END_KEY_CODE:
-                if(timer.currentState == "progress") {
+                if (timer.currentState == "progress") {
                     timer.setState("pause");
                 } else if (timer.currentState == "pause") {
                     timer.setState("progress");
                 }
-                
+
                 timer.checkState();
                 break;
             case ESC_KEY_CODE:
@@ -135,6 +149,7 @@ function enableKeyboardInteractions() {
 //initialize
 enableKeyboardInteractions();
 let timer = new Timer();
+let time = new Time();
 
 function runEverySecond() {
     timer.checkState();

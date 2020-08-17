@@ -8,38 +8,86 @@ body {
 
 input[type=text] {
     border: none;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     outline: none;
+    max-width: 25vw;
+    color: rgba(0,0,0,0.7);
+    font-weight: 300;
+    font-family: sans-serif;
 }
 
 input[type=number] {
+    display:inline-block;
     border: none;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
     outline: none;
+    width: 30px;
+    text-align: center;
+    color: rgba(0,0,0,0.7);
+    font-weight: 300;
 }
+
+input[type=submit] {
+    display:inline-block;
+    padding:0.2em 1.2em;
+    border:0.1em solid rgba(0,0,0,0.2);
+    margin-left: 0.4em;
+    border-radius:0.12em;
+    /* box-sizing: border-box;
+    text-decoration:none;
+    columns: rgba(0,0,0,0.2); */
+    text-align:center;
+    transition: all 0.2s;
+    background-color: white;
+    color: rgba(0,0,0,0.7);
+}
+
+input[type=submit]:hover {
+    display:inline-block;
+    padding:0.2em 1.2em;
+    border:0.1em solid rgba(0,0,0,0.2);
+    margin-left: 0.4em;
+    border-radius:0.12em;
+    /* box-sizing: border-box;
+    text-decoration:none;
+    columns: rgba(0,0,0,0.2); */
+    text-align:center;
+    transition: all 0.2s;
+    background-color: rgba(0,0,0,0.05);
+    color: rgba(0,0,0,0.7);
+}
+
+label {
+    color: rgba(0,0,0,0.5);
+    outline: none;
+    font-weight: 300;
+}
+
 
 #header {
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
-    height: 20vh;
+    height: 10vh;
     /* background-color: green; */
     justify-content: space-between;
     align-items: center;
 }
 
 #header h1 {
+    font-size: 40px;
     position: absolute;
     top: 0%;
+    font-weight: lighter;
 }
-
+/* 
 #header h4 {
     font-size: 30px;
     position: absolute;
     top: 50%;
     
-}
+} */
 
 #footer {
     position: fixed;
@@ -72,8 +120,9 @@ input[type=number] {
     display: flex;
     width: 100%;
     height: 15vh;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    padding-bottom: 20px;
 }
 
 #imageContainer {
@@ -82,17 +131,18 @@ input[type=number] {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40vh;
+    height: 50vh;
 }
 
 #image {
     position: absolute;
-    max-width: auto;
+    max-width: 50vw;
     height: 100%;
+    border-radius: 10px;
 }
 
 #clock {
     position: absolute;
-    font-size: 50px;
-    
+    font-size: 45px;
+    font-weight: 100;
 }
